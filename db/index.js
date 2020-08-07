@@ -6,7 +6,7 @@ const db = () => {
     try {
         mongoose.connect(database_connection, {
             useNewUrlParser: true,
-            useUnifiedTopology: false,
+            useUnifiedTopology: true,
             useFindAndModify: false,
         });
     } catch (error) {
