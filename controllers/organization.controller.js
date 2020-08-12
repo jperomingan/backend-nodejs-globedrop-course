@@ -1,4 +1,5 @@
-const OrganizationService = require('../services/organization.service')
+const OrganizationService = require('../services/organization.service');
+const organizationService = require('../services/organization.service');
 
 const AddOrganization = async (req, res) =>  {
     try {
@@ -38,6 +39,35 @@ const AddOrganization = async (req, res) =>  {
     }
 };
 
+const GetAllOrganizations = async (req, res) => {
+    try {
+        const organizations = await organizationService.Find()
+        return res.status(200).json({
+            message: 'All Organization',
+            data: organizations
+        })
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+const GetOrganizationsById = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const organizations = await organizationService.FindOne({
+            _id,
+        });
+        return res.status(200).json({
+            message: 'Organization Fetched',
+            data: organizations,
+        });
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 module.exports = {
-    AddOrganization
+    AddOrganization,
+    GetAllOrganizations,
+    GetOrganizationsById
 }

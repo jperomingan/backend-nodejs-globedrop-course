@@ -16,7 +16,7 @@ const Find = async (data) =>  {
     } catch(error) {
         console.log('error: ', error)
     }
-}
+};
 
 const FindOne = async (query) =>  {
     try {
@@ -25,10 +25,32 @@ const FindOne = async (query) =>  {
     } catch(error) {
         console.log('error: ', error)
     }
-}
+};
+
+const FindOneAndUpdate = async (filter, data) =>  {
+    try {
+        const organization = await Organization.findOneAndUpdate(filter, {
+            ...data
+        });
+        return organization;
+    } catch(error) {
+        console.log('error: ', error)
+    }
+};
+
+const DeleteOne = async (filter) =>  {
+    try {
+        const organization = await Organization.findOne(filter)
+        return organization;
+    } catch(error) {
+        console.log('error: ', error)
+    }
+};
 
 module.exports = {
     Create,
     Find,
-    FindOne
+    FindOne,
+    FindOneAndUpdate,
+    DeleteOne
 }
