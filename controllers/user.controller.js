@@ -206,3 +206,14 @@ const Login = async (req, res, next) => {
         console.log('error: ', error);
     }
 }
+
+module.exports = {
+    GetAllUsersList,
+    GetOrganizationsByUser,
+    GetUserByType,
+    GetUserById,
+    Register,
+    UpdateUser,
+    DeleteUser,
+    Login
+}
