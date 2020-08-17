@@ -1,5 +1,6 @@
 const express = require('express')
 const OrganizationController = require('../controllers/organization.controller')
+const UserController = require('../controllers/user.controller')
 const router = express.Router()
 
 router.post('/organization', OrganizationController.AddOrganization);
