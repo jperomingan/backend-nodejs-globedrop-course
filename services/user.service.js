@@ -1,4 +1,4 @@
-const User = require('../models/user.model/user.model')
+const User = require('../models/user.model')
 
 const Create = async (data) =>  {
     try {
@@ -26,4 +26,5 @@ const FindOne = async (query) =>  {
         console.log('error: ', error)
     }
 };
+
 
