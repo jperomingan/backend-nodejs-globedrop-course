@@ -27,4 +27,22 @@ const FindOne = async (query) =>  {
     }
 };
 
+const FindOneAndUpdate = async (filter, data) =>  {
+    try {
+        const user = await User.findOneAndUpdate(filter, {
+            ...data
+        });
+        return user;
+    } catch(error) {
+        console.log('error: ', error)
+    }
+};
+
+module.exports = {
+    Create,
+    Find,
+    FindOne,
+    FindOneAndUpdate,
+    DeleteOne
+}
 
