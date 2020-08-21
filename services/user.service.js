@@ -42,7 +42,6 @@ module.exports = {
     Create,
     Find,
     FindOne,
-    FindOneAndUpdate,
-    DeleteOne
+    FindOneAndUpdate
 }
 

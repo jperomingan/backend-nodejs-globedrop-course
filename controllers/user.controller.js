@@ -207,55 +207,6 @@ const Login = async (req, res, next) => {
     }
 }
 
-const AddUser = async (req, res) =>  {
-    try {
-        const {
-            username,
-            name,
-            email,
-            password,
-            language,
-            country,
-            userType,
-            organizations,
-            createdAt,
-            updatedAt,
-        } = req.body
-
-        const existing_user = await UserService.FindOne({
-            username,
-        })
-
-        if(existing_user) {
-            return res.status(409).json ({
-                message: 'Data Exists'
-            })
-        }
-
-        const new_user = await UserService.Create({
-            username,
-            name,
-            email,
-            password,
-            language,
-            country,
-            userType,
-            organizations,
-            createdAt,
-            updatedAt
-        })
-
-        return res.status(200).json({
-            message: 'New Organization Inserted'
-
-        });
-
-    } catch(error) {
-        console.log('error: ', error);
-    }
-};
-
-
 module.exports = {
     GetAllUsersList,
     GetOrganizationsByUser,
