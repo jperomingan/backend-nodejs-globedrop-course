@@ -51,7 +51,7 @@ const GetAllOrganizations = async (req, res) => {
     }
 }
 
-const GetOrganizationsById = async (req, res) => {
+const GetOrganizationById = async (req, res) => {
     try {
         const { _id } = req.params;
         const organizations = await organizationService.FindOne({
@@ -69,5 +69,5 @@ const GetOrganizationsById = async (req, res) => {
 module.exports = {
     AddOrganization,
     GetAllOrganizations,
-    GetOrganizationsById
+    GetOrganizationById
 }

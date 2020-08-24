@@ -20,7 +20,7 @@ const Find = async (data) =>  {
 
 const FindOne = async (query) =>  {
     try {
-        const user = await user.findOne(query)
+        const user = await User.findOne(query)
         return user
     } catch(error) {
         console.log('error: ', error)

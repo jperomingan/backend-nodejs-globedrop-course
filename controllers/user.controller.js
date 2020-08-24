@@ -5,6 +5,7 @@ const Joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const UserService = require('../services/user.service');
+const userService = require('../services/user.service');
 const User = require('../models/user.model');
 
 const GetAllUsersList = async (req, res, next) => {
@@ -30,11 +31,11 @@ const GetUserByType = async (req, res, next) => {
     }
 };
 
-const GetUserById = async (req, res, next) => {
+const GetUserById = async (req, res) => {
     try {
-        const { user_id } = req.params;
-        const user = await UserService.FindOne({
-            _id: user_id,
+        const { _id } = req.params;
+        const user = await userService.FindOne({
+            _id,
         });
         console.log('user: ', user);
         if(!user) {
@@ -62,7 +63,6 @@ const Register = async (req, res, next) => {
             language,
             country,
             userType,
-            organizations,
         } = req.body;
 
         const existing_user = await UserService.FindOne({
@@ -82,7 +82,6 @@ const Register = async (req, res, next) => {
             language,
             country,
             userType,
-            organizations,
         });
 
         return res.status(200).json({
