@@ -18,7 +18,9 @@ app.get('/', (req, res) =>  {
 
 // routes
 const organization = require('./routes/organization.route');
+const user = require('./routes/user.route');
 app.use(organization);
+app.use(user);
 
 
 

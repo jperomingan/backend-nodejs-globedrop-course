@@ -20,23 +20,6 @@ const GetAllUsersList = async (req, res, next) => {
     }
 };
 
-const GetOrganizationsByUser = async (req, res, next) => {
-    const { user_id } = req.params;
-    try {
-        const organizations = await User.FindOneAndPopulate(
-            { _id: user_id },
-            'organizations'
-        );
-
-        return res.status(200).json({
-            message: 'Ok',
-            data: organizations,
-        });
-    } catch (error) {
-        return next(new Error(error.message));
-    }
-};
-
 const GetUserByType = async (req, res, next) => {
     try {
         const users = await UserService.Find({
@@ -209,7 +192,6 @@ const Login = async (req, res, next) => {
 
 module.exports = {
     GetAllUsersList,
-    GetOrganizationsByUser,
     GetUserByType,
     GetUserById,
     Register,
