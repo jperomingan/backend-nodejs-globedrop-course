@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             enum: ['local', 'google', 'facebook'],
             default: 'user',
-            required: true
+            required: true,
         },
         google: {
             id: {
@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema(
         updatedAt: {
             type: Date,
             default: Date.now,
-        }
+        },
     },
     {
         versionKey: false,

@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { db } = require('./db/index');
+const passport = require('passport')
 
 /* create the instance of express object we can do that by creating the a variable called app 
 and assigning that to the express instance.

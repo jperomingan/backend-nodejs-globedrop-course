@@ -63,6 +63,7 @@ const Register = async (req, res, next) => {
             language,
             country,
             userType,
+            organizations,
         } = req.body;
 
         const existing_user = await UserService.FindOne({
@@ -75,6 +76,7 @@ const Register = async (req, res, next) => {
         }
 
         await UserService.Create({
+            method: 'local',
             username,
             name,
             email,
@@ -82,6 +84,7 @@ const Register = async (req, res, next) => {
             language,
             country,
             userType,
+            organizations,
         });
 
         return res.status(200).json({
@@ -167,6 +170,8 @@ const DeleteUser = async (req, res, next) => {
 
 const Login = async (req, res, next) => {
     try {
+        const user = req.user
+        
         const { email, password } = req.body;
 
         try {

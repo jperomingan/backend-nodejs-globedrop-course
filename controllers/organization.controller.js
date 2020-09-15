@@ -1,5 +1,4 @@
 const OrganizationService = require('../services/organization.service');
-const organizationService = require('../services/organization.service');
 
 const AddOrganization = async (req, res) =>  {
     try {
@@ -9,11 +8,12 @@ const AddOrganization = async (req, res) =>  {
             org_country,
             org_city,
             org_picture,
-        } = req.body
+            admins,
+        } = req.body;
 
         const existing_organization = await OrganizationService.FindOne({
             org_name,
-        })
+        });
 
         if(existing_organization) {
             return res.status(409).json ({
@@ -27,6 +27,7 @@ const AddOrganization = async (req, res) =>  {
             org_country,
             org_city,
             org_picture,
+            admins,
         })
 
         return res.status(200).json({
