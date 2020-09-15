@@ -16,7 +16,19 @@ const UserSchema = new mongoose.Schema(
         },
         method: {
             type: String,
-            enum: ['local', 'google', 'facebook']
+            enum: ['local', 'google', 'facebook'],
+            default: 'user',
+            required: true
+        },
+        google: {
+            id: {
+                type: String
+            }
+        },
+        facebook: {
+            id: {
+                type: String
+            }
         },
         organizations: [
             { type: mongoose.Schema.Types.ObjectId, ref: 'organization'},
