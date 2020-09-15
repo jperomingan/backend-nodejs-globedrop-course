@@ -31,7 +31,10 @@ const UserSchema = new mongoose.Schema(
             }
         },
         organizations: [
-            { type: mongoose.Schema.Types.ObjectId, ref: 'organization'},
+            { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: 'organization'
+            },
         ],
         createdAt: {
             type: Date,

@@ -1,4 +1,7 @@
 const User = require('../models/user.model')
+const { query } = require('express')
+const { populate } = require('../models/user.model')
+const { DeleteOne } = require('./organization.service')
 
 const Create = async (data) =>  {
     try {
@@ -38,10 +41,27 @@ const FindOneAndUpdate = async (filter, data) =>  {
     }
 };
 
+const DeleteOne = async (filter) => {
+    try {
+        const organization = await Organization.deleteOne(filter);
+        return organization
+    } catch (error) {
+        throw Error(error)
+    }
+};
+
+const FindOneandPopulate = async (query, populate_field) => {
+    const user = await (await User.findOne(query)).populated(populate_field)
+    const organizations = user.organizations
+    return organizations
+}
+
 module.exports = {
     Create,
     Find,
     FindOne,
-    FindOneAndUpdate
-}
+    FindOneAndUpdate,
+    DeleteOne,
+    FindOneandPopulate
+};
 
