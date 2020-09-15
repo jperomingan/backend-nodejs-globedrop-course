@@ -14,6 +14,13 @@ const UserSchema = new mongoose.Schema(
             enum: ['user', 'ngo_admin', 'super_admin'],
             default: 'user',
         },
+        method: {
+            type: String,
+            enum: ['local', 'google', 'facebook']
+        },
+        organizations: [
+            { type: mongoose.Schema.Types.ObjectId, ref: 'organization'},
+        ],
         createdAt: {
             type: Date,
             default: Date.now,
