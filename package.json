@@ -1,0 +1,22 @@
+{
+  "name": "dropbox",
+  "version": "1.0.0",
+  "description": "first node app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jperomingan/backend-nodejs-globedrop-course.git"
+  },
+  "author": "Jennelyn U. Peromingan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jperomingan/backend-nodejs-globedrop-course/issues"
+  },
+  "homepage": "https://github.com/jperomingan/backend-nodejs-globedrop-course#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
