@@ -12,12 +12,24 @@ const FindOne = async (query) => {
 }
 
 const Create = async (query) => {
-    const organization = await Organization.findOne(query)
+    const organization = await Organization.create(query)
+    return organization
+}
+
+const FindOneAndUpdate = async (filter, data) => {
+    const organization = await Organization.findOneAndUpdate(filter, {...data})
+    return organization
+}
+
+const DeleteOne = async (filter) => {
+    const organization = await Organization.deleteOne(filter)
     return organization
 }
 
 module.exports = {
     Find,
     FindOne,
-    Create
+    Create,
+    FindOneAndUpdate,
+    DeleteOne
 }

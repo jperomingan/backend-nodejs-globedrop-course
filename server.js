@@ -1,13 +1,20 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 const port = 3000;
-const {db} = require('./db/index')
+const { db } = require('./db/index')
+const organization = require('./routes/organization.route')
+
 
 app.get('/', (req, res) => {
     res.send('Hello Jenn');
 });
 
 db();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({}));
+app.use(organization);
 
 app.listen(port, () => {
     console.log('Server runs at port: ', port);
