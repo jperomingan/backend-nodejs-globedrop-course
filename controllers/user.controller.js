@@ -50,7 +50,7 @@ const GetUsersByType = async (req, res, next) => {
 const GetUserById = async(req, res, next) => {
     try {
         const { user_id } = req.params;
-        const user = await.UserService.FindOne({
+        const user = await UserService.FindOne({
             _id: user_id,
         });
         if(!user) {
@@ -110,6 +110,15 @@ const Register = async (req, res, next) => {
             access_token
         });
     } catch (error) {
-        return next(new Error(error.message);)
+        return next(new Error(error.message));
     }
+};
+
+
+module.exports = {
+    GetAllUsers,
+    GetOrganizationsByUser,
+    GetUsersByType,
+    GetUserById,
+    Register
 };
