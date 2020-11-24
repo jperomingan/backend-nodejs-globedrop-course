@@ -1,9 +1,6 @@
-const Joi = require('@hapi/joi');
-const jwt = require('jsonwebtoken');
 const UserService = require('../services/user.service');
-const TokenService = require('../services/token.service');
 
-const GetAllUsers = async (req, res, next) => {
+const GetAllUsers = async (req, res) => {
     try {
         const users = await UserService.Find({})
         return res.status(200).json({
@@ -12,7 +9,6 @@ const GetAllUsers = async (req, res, next) => {
         })
     } catch (error) {
         console.log('error: ', error)
-        return next(new Error(error.message));
     }
 };
 
@@ -32,7 +28,7 @@ const GetOrganizationsByUser = async (req, res, next) =>  {
     }
 };
 
-const GetUsersByType = async (req, res, next) => {
+const GetUsersByType = async (req, res) => {
     const { user_type } = req.params;
     try{
         const users = await UserService.Find({
@@ -43,16 +39,17 @@ const GetUsersByType = async (req, res, next) => {
             data: users,
         });
     } catch(error) {
-        return next(new Error(error.message));
+        console.log(error.message);
     }
 };
 
-const GetUserById = async(req, res, next) => {
+const GetUserById = async(req, res) => {
     try {
         const { user_id } = req.params;
         const user = await UserService.FindOne({
             _id: user_id,
         });
+        console.log('user: ', user);
         if(!user) {
             return res.status(404).json({
                 message: 'User Not Found',
@@ -63,11 +60,11 @@ const GetUserById = async(req, res, next) => {
             data: user,
         });
     } catch (error) {
-        return next(new Error(error.message));
+        console.log(error.message);
     }
 };
 
-const Register = async (req, res) => {
+const Register = async (req, res, next) => {
     try {
         const {
             username,
@@ -77,7 +74,6 @@ const Register = async (req, res) => {
             language,
             country,
             userType,
-            organizations,
         } = req.body;
         const existing_user = await UserService.FindOne({
             email,
@@ -88,7 +84,6 @@ const Register = async (req, res) => {
             });
         }
         const new_user = await UserService.Create({
-            method: "local",
             username,
             name,
             email,
@@ -96,23 +91,69 @@ const Register = async (req, res) => {
             language,
             country,
             userType,
-            organizations,
         });
-        // const access_token = jwt.sign(new_user.toJSON(), process.env.SECRET_TOKEN, {
-        //     expiresIn: '24h',
-        // });
-
-        // await TokenService.Create({ access_token });
 
         return res.status(200).json({
-            message: 'Ok',
-            user: new_user,
+            message: 'User Inserted',
         });
     } catch (error) {
         return next(new Error(error.message));
     }
 };
 
+const UpdateUser = async (req, res) => {
+    try {
+        const { user_id } = req.params;
+        const {
+            username,
+            name,
+            email,
+            password,
+            language,
+            country,
+            userType,
+        } = req.body;
+
+        const user = await UserService.FindOne({
+            _id: user_id,
+        });
+        console.log('user: ', user);
+
+    if (!user) {
+        return res.status(404).json({
+            message: 'User Not Found',
+        });
+    }
+
+    return res.status(200).json({
+        message: 'User Updated',
+    });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const DeleteUser = async (req, res) => {
+    try {
+        const { user_id } = req.params;
+        const user = await UserService.FindOne({
+            _id: user_id,
+        })
+        console.log('user: ', user);
+        if(!user) {
+            return res.status(404).json({
+                message: 'User Not Found',
+            });
+        }
+        await UserService.DeleteOne({ _id: user_id });
+
+        return res.status(200).json({
+            message: 'User Deleted',
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     GetAllUsers,
