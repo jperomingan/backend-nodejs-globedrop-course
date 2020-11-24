@@ -5,6 +5,21 @@ const OrganizationSchema = new mongoose.Schema({
     org_country: String,
     org_city: String,
     org_picture: String,
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
+},
+{
+    versionKey: false,
+});
+
+OrganizationSchema.pre('findOneAndUpdate', async function () {
+    this.update({}, { $set: { updatedAt: new Date() }});
 });
 
 const Organization = mongoose.model('organization', OrganizationSchema, 'organization');
