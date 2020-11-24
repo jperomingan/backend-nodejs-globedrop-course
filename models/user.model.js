@@ -31,14 +31,14 @@ const UserSchema = new mongoose.Schema(
         //         ref: 'organization'
         //     },
         // ],
-        // createdAt: {
-        //     type: Date,
-        //     default: Date.now,
-        // },
-        // updatedAt: {
-        //     type: Date,
-        //     default: Date.now,
-        // },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now,
+        },
     },
     {
         versionKey: false,
