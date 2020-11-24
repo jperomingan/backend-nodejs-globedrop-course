@@ -161,4 +161,6 @@ module.exports = {
     GetUsersByType,
     GetUserById,
     Register,
+    UpdateUser,
+    DeleteUser,
 };
