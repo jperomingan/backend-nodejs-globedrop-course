@@ -75,6 +75,7 @@ const Register = async (req, res, next) => {
             language,
             country,
             userType,
+            organizations,
         } = req.body;
         const existing_user = await UserService.FindOne({
             email,
@@ -92,6 +93,7 @@ const Register = async (req, res, next) => {
             language,
             country,
             userType,
+            organizations,
         });
 
         return res.status(200).json({
@@ -113,6 +115,7 @@ const UpdateUser = async (req, res) => {
             language,
             country,
             userType,
+            organizations,
         } = req.body;
 
         const user = await UserService.FindOne({
@@ -125,6 +128,20 @@ const UpdateUser = async (req, res) => {
             message: 'User Not Found',
         });
     }
+
+    await UserService.FindOneAndUpdate(
+        { _id: user_id },
+        {
+            username,
+            name,
+            email,
+            password,
+            language,
+            country,
+            userType,
+            organizations
+        }
+    );
 
     return res.status(200).json({
         message: 'User Updated',
