@@ -1,10 +1,25 @@
 const { database } = require('firebase-admin')
-const organizationService = require('../services/organization.service')
 const OrganizationService = require('../services/organization.service')
+
+const GetAdminsByOrganization = async (req, res) => {
+    const { organization_id } = req.params
+    try {
+        const admins = await OrganizationService.FindOneandPopulate(
+            { _id : organization_id},
+            'admins'
+        )
+        return res.status(200).json({
+            message: 'Ok',
+            data: admins
+        })
+    } catch (error) {
+        console.log('Error: ', error)
+    }
+}
 
 const GetAllOrganizations = async (req, res) => {
     try {
-        const organizations = await organizationService.Find()
+        const organizations = await OrganizationService.Find()
         return res.status(200).json({
             message: 'OK',
             data: organizations
@@ -112,5 +127,6 @@ module.exports = {
     GetAllOrganizations,
     AddOrganization,
     UpdateOrganization,
-    DeleteOrganization
+    DeleteOrganization,
+    GetAdminsByOrganization
 }
