@@ -25,12 +25,12 @@ const UserSchema = new mongoose.Schema(
         //         type: String
         //     }
         // },
-        // organizations: [
-        //     {
-        //         type: mongoose.Schema.Types.ObjectId,
-        //         ref: 'organization'
-        //     },
-        // ],
+        organizations: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'organization'
+            },
+        ],
         createdAt: {
             type: Date,
             default: Date.now,
