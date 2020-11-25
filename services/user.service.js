@@ -1,4 +1,5 @@
 const { query } = require('express');
+const { populate } = require('../models/user.model');
 const User = require('../models/user.model');
 
 const Create = async (data) => {
@@ -49,10 +50,17 @@ const DeleteOne = async (filter) => {
     }
 };
 
+const FindOneandPopulate = async (query, populate_field) => {
+    const user = await User.findOne(query).populate(populate_field)
+    const organizations = user.organizations
+    return organizations
+}
+
 module.exports = {
     Create,
     Find,
     FindOne,
     FindOneAndUpdate,
-    DeleteOne
+    DeleteOne,
+    FindOneandPopulate
 }
