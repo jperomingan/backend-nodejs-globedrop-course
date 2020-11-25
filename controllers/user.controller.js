@@ -1,5 +1,6 @@
 const UserService = require('../services/user.service');
 
+
 const GetAllUsers = async (req, res) => {
     try {
         const users = await UserService.Find({})
@@ -157,10 +158,10 @@ const DeleteUser = async (req, res) => {
 
 module.exports = {
     GetAllUsers,
-    GetOrganizationsByUser,
     GetUsersByType,
     GetUserById,
     Register,
     UpdateUser,
     DeleteUser,
+    GetOrganizationsByUser,
 };
