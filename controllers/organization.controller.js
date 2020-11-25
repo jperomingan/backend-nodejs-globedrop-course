@@ -37,6 +37,7 @@ const AddOrganization = async (req, res) => {
             org_country,
             org_city,
             org_picture,
+            admins,
         } = req.body
 
         const existing_organization = await OrganizationService.FindOne({
@@ -56,7 +57,8 @@ const AddOrganization = async (req, res) => {
             org_description,
             org_country,
             org_city,
-            org_picture
+            org_picture,
+            admins,
         })
 
         return res.status(200).json({
@@ -78,6 +80,7 @@ const UpdateOrganization = async (req, res) => {
             org_country,
             org_city,
             org_picture,
+            admins,
         } = req.body
 
         const organization = await OrganizationService.FindOne({
@@ -98,6 +101,7 @@ const UpdateOrganization = async (req, res) => {
                 org_country,
                 org_city,
                 org_picture,
+                admins,
             }
         )
 
