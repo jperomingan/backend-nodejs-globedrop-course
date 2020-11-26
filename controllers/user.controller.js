@@ -1,6 +1,7 @@
 const UserService = require('../services/user.service');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const TokenService = require('../services/token.service')
 
 const GetAllUsers = async (req, res) => {
     try {
@@ -189,7 +190,25 @@ const Login = async(req, res) => {
                 message: 'Invalid email/password'
             })
         }
+        const access_token = jwt.sign(user.toJSON(),'secretkey', {expiresIn: '24h'});
+        await TokenService.Create({access_token})
+        return res.status(200).json({
+            message: 'User Authenticated',
+            access_token
+        })
+    } catch (error) {
+        console.log('Error: ', error)
+    }
+};
 
+const Logout = async (req, res) => {
+    try {
+        const authorization = req.headers['x-access-token'] || req.headers.authorization
+        const token = authorization && authorization.startsWith('Bearer') && authorization.split(' ')[1]
+        await TokenService.DeleteOne({access_token: token})
+        return res.status(200).json({
+            message: 'User logged out'
+        })
     } catch (error) {
         console.log('Error: ', error)
     }
@@ -203,4 +222,6 @@ module.exports = {
     UpdateUser,
     DeleteUser,
     GetOrganizationsByUser,
+    Login,
+    Logout,
 };

@@ -8,6 +8,8 @@ router.get('/user/:user_id', UserController.GetUserById);
 router.put('/user/:user_id', UserController.UpdateUser);
 router.delete('/user/:user_id', UserController.DeleteUser);
 router.get('/users', UserController.GetAllUsers);
-router.get('/user/:user_id/organizations', UserController.GetOrganizationsByUser)
+router.get('/user/:user_id/organizations', UserController.GetOrganizationsByUser);
+router.post('/user/login', UserController.Login);
+router.post('/user/logout', UserController.Logout);
 
 module.exports = router;
