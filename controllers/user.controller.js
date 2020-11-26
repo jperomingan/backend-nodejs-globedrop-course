@@ -1,5 +1,6 @@
 const UserService = require('../services/user.service');
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const GetAllUsers = async (req, res) => {
     try {
@@ -170,6 +171,27 @@ const DeleteUser = async (req, res) => {
         });
     } catch (error) {
         console.log(error.message);
+    }
+}
+
+const Login = async(req, res) => {
+    try {
+        const { email, password } = req.body
+        const user = await UserService.FindOne({email})
+        if(!user) {
+            return res.status(400).json({
+                message: 'Invalid email/password'
+            })
+        }
+        const valid = user.password && (await bcrypt.compare(password, user.password))
+        if(!valid){
+            return res.status(400).json({
+                message: 'Invalid email/password'
+            })
+        }
+
+    } catch (error) {
+        console.log('Error: ', error)
     }
 }
 
