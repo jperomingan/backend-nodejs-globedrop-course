@@ -1,6 +1,7 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 const User = require('./models/user.model')
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
@@ -72,3 +73,43 @@ passport.use(new GoogleStrategy({
         }
     }
 ))
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_OAUTH_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_OAUTH_CLIENT_SECRET,
+    callbackURL: process.env.FACEBOOK_OAUTH_CALLBACK,
+    profileFields: ['id', 'emails', 'name'],
+},
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+            console.log('profile: ', profile)
+            const existingUser = await User.findOne({ facebookId: profile.id });
+            if(existingUser) {
+                console.log('User exists')
+
+                const access_token = jwt.sign(existingUser.toJSON(), 'secretkey', {
+                    expiresIn: '24h',
+                });
+
+                return done(null, access_token)
+            } else {
+                const newUser = new User({
+                    method: 'facebook',
+                    email: profile.emails[0].value,
+                    google: {
+                        id: profile.id
+                    }
+                })
+                await newUser.save()
+
+                const access_token = jwt.sign(newUser.toJSON(), 'secretkey', {
+                    expiresIn: '24h',
+                });
+                return done(null, access_token);
+            }
+        } catch (error) {
+            done(error, false);
+        }
+    }
+))
+

@@ -25,6 +25,15 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
         return res.status(200).json({message: 'Ok', access_token: req._passport.session.user});
     });
 
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/failure'}),
+    function(req, res) {
+        // Successfull authentication, redirect home
+        // res.redirect('/');
+        console.log('req.passport.session: ', req._passport.session);
+        return res.status(200).json({message: 'Ok', access_token: req._passport.session.user});
+    });
+
 router.post('/user/logout', UserController.Logout);
 
 
