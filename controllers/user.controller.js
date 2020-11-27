@@ -87,7 +87,7 @@ const Register = async (req, res, next) => {
                 message: 'Email address already exist',
             });
         }
-        const new_user = await UserService.Create({
+        await UserService.Create({
             username,
             name,
             email,
@@ -177,19 +177,8 @@ const DeleteUser = async (req, res) => {
 
 const Login = async(req, res) => {
     try {
-        const { email, password } = req.body
-        const user = await UserService.FindOne({email})
-        if(!user) {
-            return res.status(400).json({
-                message: 'Invalid email/password'
-            })
-        }
-        const valid = user.password && (await bcrypt.compare(password, user.password))
-        if(!valid){
-            return res.status(400).json({
-                message: 'Invalid email/password'
-            })
-        }
+        const user = req.user
+
         const access_token = jwt.sign(user.toJSON(),'secretkey', {expiresIn: '24h'});
         await TokenService.Create({access_token})
         return res.status(200).json({
