@@ -2,6 +2,7 @@ const UserService = require('../services/user.service');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const TokenService = require('../services/token.service')
+const Joi = require('joi')
 
 const GetAllUsers = async (req, res) => {
     try {
@@ -79,6 +80,25 @@ const Register = async (req, res, next) => {
             userType,
             organizations,
         } = req.body;
+
+        try {
+            const schema = Joi.object({
+                email: Joi.string().email().required(),
+                password: Joi.string().required()
+            })
+
+            const input = {
+                email,
+                password
+            }
+
+            await schema.validateAsync(input);
+
+        } catch (error) {
+            console.log('error: ', error);
+            return res.status(409).json({message: error})
+        }
+
         const existing_user = await UserService.FindOne({
             email,
         }); 

@@ -97,8 +97,8 @@ passport.use(new FacebookStrategy({
                     method: 'facebook',
                     email: profile.emails[0].value,
                     google: {
-                        id: profile.id
-                    }
+                        id: profile.id,
+                    },
                 })
                 await newUser.save()
 
