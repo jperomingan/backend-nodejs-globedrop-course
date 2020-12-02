@@ -36,7 +36,6 @@ router.get('/facebook/callback', passport.authenticate('facebook', { failureRedi
 
 router.post('/user/logout', UserController.Logout);
 
-
 // app.use(isAuthenticated)
 // router.put('/user/:user_id', UserController.UpdateUser);
 // router.delete('/user/:user_id', UserController.DeleteUser);
